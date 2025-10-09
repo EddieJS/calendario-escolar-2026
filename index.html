@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendários por Segmento - Professores 2026</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://apis.google.com/js/api.js"></script> 
+</head>
+<body>
+
+    <header class="cabecalho">
+        <h1>Calendários de Eventos 2026</h1>
+        <p>Selecione o segmento para visualizar os eventos específicos.</p>
+    </header>
+
+    <div class="tabs-container">
+        <button class="tab-button active" data-segmento="Infantil">Educação Infantil</button>
+        <button class="tab-button" data-segmento="Iniciais">Fundamental I</button>
+        <button class="tab-button" data-segmento="Finais">Fundamental II</button>
+        <button class="tab-button" data-segmento="Medio">Ensino Médio</button>
+
+        <button id="toggle-view-button" class="tab-button secondary">Ver Lista de Eventos</button>
+
+        <button id="info-button" class="tab-button secondary">Informações Importantes do Curso</button>
+    </div>
+    <div class="calendario-container" id="calendarioAnual">
+        <p id="loading-message">Iniciando a conexão com o Google Calendar...</p>
+    </div>
+
+    <div id="listaEventosContainer" class="lista-eventos-container hidden">
+        </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+    <div class="tabs-container">
+        <button class="tab-button active" data-segmento="Infantil">Educação Infantil</button>
+        <button class="tab-button" data-segmento="Iniciais">Fundamental I</button>
+        <button class="tab-button" data-segmento="Finais">Fundamental II</button>
+        <button class="tab-button" data-segmento="Medio">Ensino Médio</button>
+    </div>
+    <div class="calendario-container" id="calendarioAnual">
+        <p id="loading-message">Carregando calendário...</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
