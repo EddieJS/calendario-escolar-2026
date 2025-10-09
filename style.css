@@ -7,10 +7,11 @@ body {
     color: #333;
 }
 
+/* 🎨 NOVO: Cor Primária da Escola (Azul Marinho) */
 .cabecalho {
     text-align: center;
     padding: 20px;
-    background-color: #007bff; /* Azul primário */
+    background-color: #003366; /* Azul Marinho Principal */
     color: white;
     margin-bottom: 20px;
 }
@@ -40,10 +41,11 @@ body {
     background-color: #dee2e6;
 }
 
+/* 🎨 NOVO: Cor para Botão Ativo (Azul Marinho Principal) */
 .tab-button.active {
-    background-color: #007bff; 
+    background-color: #003366; 
     color: white;
-    border-color: #007bff;
+    border-color: #003366;
     font-weight: bold;
 }
 
@@ -66,9 +68,10 @@ body {
     padding: 15px;
 }
 
+/* 🎨 NOVO: Cor do Título do Mês (Azul Marinho Principal) */
 .mes h2 {
     text-align: center;
-    color: #007bff;
+    color: #003366;
     margin-top: 0;
     border-bottom: 2px solid #e0e0e0;
     padding-bottom: 5px;
@@ -110,16 +113,16 @@ body {
     visibility: hidden;
 }
 
-/* Destaque de Eventos */
+/* 🎨 NOVO: Cor de Destaque para Eventos (Vermelho Destaque da Escola) */
 .evento-dia {
     font-weight: bold;
     color: white; 
-    background-color: #dc3545; /* Vermelho para destaque */
+    background-color: #990000; /* Vermelho Destaque */
     position: relative;
     overflow: visible; 
 }
 
-/* Tooltip/Dica de Evento */
+/* Tooltip/Dica de Evento (Mantido) */
 .evento-dia::after {
     content: attr(data-evento); 
     position: absolute;
@@ -141,7 +144,7 @@ body {
     opacity: 1; 
 }
 
-/* Mensagens de Erro e Aviso */
+/* Mensagens de Erro e Aviso (Mantido) */
 .erro-api, .aviso {
     grid-column: 1 / -1; 
     text-align: center;
@@ -200,15 +203,15 @@ body {
     display: none !important;
 }
 
-/* Estilo do botão secundário (Lista e Info) */
+/* 🎨 NOVO: Cor para Botões Secundários (Lista e Info) */
 .tab-button.secondary {
-    background-color: #6c757d; /* Cinza escuro */
+    background-color: #1b629b; /* Azul Secundário da Escola */
     color: white;
-    border-color: #6c757d;
+    border-color: #1b629b;
     margin-left: 20px; /* Separar dos botões de segmento */
 }
 .tab-button.secondary:hover {
-    background-color: #5a6268;
+    background-color: #003366; /* Marinho ao passar o mouse */
 }
 
 /* Estilo do Container da Lista Cronológica */
@@ -221,8 +224,9 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* 🎨 NOVO: Cor do Título da Lista Cronológica (Azul Marinho Principal) */
 .lista-eventos-container h2 {
-    color: #007bff;
+    color: #003366;
     border-bottom: 2px solid #e0eeef;
     padding-bottom: 10px;
     margin-bottom: 20px;
@@ -243,9 +247,10 @@ body {
     border-bottom: none;
 }
 
+/* 🎨 NOVO: Cor de Destaque da Data na Lista Cronológica (Vermelho Destaque) */
 .data-evento {
     font-weight: bold;
-    color: #dc3545; /* Vermelho do evento */
+    color: #990000; /* Vermelho Destaque */
     min-width: 100px; /* Garante alinhamento */
     padding-right: 20px;
 }
