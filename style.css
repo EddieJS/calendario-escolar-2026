@@ -7,13 +7,37 @@ body {
     color: #333;
 }
 
-/* 🎨 NOVO: Cor Primária da Escola (Azul Marinho) */
+/* 🎨 NOVO: Fundo do cabeçalho ajustado para combinar com o logo */
 .cabecalho {
     text-align: center;
     padding: 20px;
-    background-color: #003366; /* Azul Marinho Principal */
-    color: white;
+    background-color: #f4f7f6; /* Fundo suave, próximo ao cinza claro do logo */
+    color: #333; /* Cor do texto principal */
     margin-bottom: 20px;
+    display: flex; /* Para centralizar o logo verticalmente */
+    flex-direction: column; /* Para empilhar logo e parágrafo */
+    align-items: center; /* Centraliza horizontalmente */
+    justify-content: center; /* Centraliza verticalmente */
+    min-height: 120px; /* Altura mínima para o cabeçalho */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave para destacar */
+}
+
+/* 🎨 NOVO: Estilo para o container do logo */
+.logo-container {
+    margin-bottom: 10px; /* Espaço entre o logo e o parágrafo */
+}
+
+/* 🎨 NOVO: Estilo para a imagem do logo */
+.logo {
+    max-width: 250px; /* Tamanho máximo do logo */
+    height: auto; /* Mantém a proporção */
+}
+
+/* 🎨 NOVO: Ajuste para o parágrafo do cabeçalho */
+.cabecalho p {
+    margin: 0; /* Remove margem padrão do parágrafo */
+    font-size: 1.1em;
+    color: #555; /* Cor mais suave para o texto */
 }
 
 /* Estilos para as Abas de Segmento */
