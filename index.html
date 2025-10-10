@@ -16,6 +16,10 @@
     <p>Selecione o segmento para visualizar os eventos específicos.</p>
 </header>
 
+    <div id="notificacaoContainer" class="alerta-notificacao hidden">
+        </div>
+    <div class="tabs-container">
+
     <div class="tabs-container">
         <button class="tab-button active" data-segmento="Infantil">Educação Infantil</button>
         <button class="tab-button" data-segmento="Iniciais">Fundamental A.I.</button>
@@ -23,7 +27,7 @@
         <button class="tab-button" data-segmento="Medio">Ensino Médio</button>
 
         <button id="toggle-view-button" class="tab-button secondary">Ver Lista de Eventos</button>
-        <button id="info-button" class="tab-button secondary">Informações Importantes do Curso</button>
+        <button id="info-button" class="tab-button secondary">Informações Importantes</button>
     </div>
     <div class="calendario-container" id="calendarioAnual">
         <p id="loading-message">Iniciando a conexão com o Google Calendar...</p>
@@ -35,4 +39,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
