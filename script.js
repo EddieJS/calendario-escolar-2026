@@ -6,6 +6,11 @@ const API_KEY = 'AIzaSyCc77iWLeS0WFwiuyVR9AMidymfk4l9c9s';
 const ANO_ATUAL = 2026;
 const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 
+// 💡 NOVO: MENSAGEM DE NOTIFICAÇÃO
+// Se o valor for uma string vazia (''), o alerta não será exibido.
+// Use esta variável para o texto do seu aviso.
+const MENSAGEM_ALERTA = "";
+
 // Mapeamento dos segmentos para os IDs do Calendário
 const CALENDAR_IDS = {
     // Insira seus IDs REAIS aqui:
@@ -60,7 +65,13 @@ function initClient() {
         // NOVO: Inicializa o botão de troca de visualização
         setupToggleView(); 
         // NOVO: Inicializa o botão de informações
-        setupInfoButton(); 
+        setupInfoButton();
+        // 💡 NOVO: EXIBE A NOTIFICAÇÃO SE HOUVER MENSAGEM
+        if (MENSAGEM_ALERTA) {
+            const notifDiv = document.getElementById('notificacaoContainer');
+            notifDiv.innerHTML = `<p>${MENSAGEM_ALERTA}</p>`;
+            notifDiv.classList.remove('hidden');
+        }
         // Carrega o primeiro calendário (Infantil)
         buscarEventosDoGoogle();
     }, function(error) {
@@ -98,6 +109,21 @@ function buscarEventosDoGoogle() {
     }).then(function(response) {
         // Sucesso na chamada
         const eventosDaApi = response.result.items;
+
+        // 💡 NOVO: Lógica de Detecção de Novo Evento
+        const botaoAtivo = document.querySelector(`.tab-button[data-segmento="${calendarioAtual}"]`);
+
+        // 1. Verifica se existe pelo menos UM evento novo no segmento
+        const possuiNovo = eventosDaApi.some(item => isNovoEvento(item));
+
+    // 2. Aplica ou remove a classe CSS
+        if (possuiNovo) {
+            botaoAtivo.classList.add('has-new-events');
+        } else {
+        botaoAtivo.classList.remove('has-new-events');
+    }
+    // FIM DA LÓGICA DE DETECÇÃO DE NOVO EVENTO
+
         // NOVO: Salva os eventos brutos no cache para a visualização em lista
         eventosDaApiCache = eventosDaApi; 
 
@@ -132,10 +158,22 @@ function buscarEventosDoGoogle() {
 function formatarEventos(eventosDaApi) {
     const eventos = {};
     eventosDaApi.forEach(item => {
-        const dataStr = item.start.date || item.start.dateTime;
-        if (!dataStr) return; 
+        let data;
+        let dataStr;
+        
+        // NOVO: Tratamento de fuso horário para eventos de Dia Inteiro
+        if (item.start.date) {
+            // Se for 'date' (dia inteiro), adiciona T12:00:00 para evitar o shift de fuso horário
+            dataStr = `${item.start.date}T12:00:00`;
+            data = new Date(dataStr);
+        } else if (item.start.dateTime) {
+            // Se for 'dateTime' (com hora), o fuso horário já está na string e funciona
+            dataStr = item.start.dateTime;
+            data = new Date(dataStr);
+        } else {
+             return; // Ignora eventos sem data
+        }
 
-        const data = new Date(dataStr);
         const mes = data.getMonth() + 1; 
         const dia = data.getDate();
         const chave = `${mes}-${dia}`;
@@ -143,8 +181,10 @@ function formatarEventos(eventosDaApi) {
         let nome = item.summary || 'Evento Sem Título';
         
         if (item.start.dateTime) {
-             const hora = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-             nome = `[${hora}] ${nome}`;
+            // Se for evento com hora, usamos a data original (item.start.dateTime)
+            const horaData = new Date(item.start.dateTime); 
+            const hora = horaData.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            nome = `[${hora}] ${nome}`;
         }
         
         if (eventos[chave]) {
@@ -273,7 +313,26 @@ function setupToggleView() {
 function gerarListaEventos(eventosDaApi) {
     const listaContainer = document.getElementById('listaEventosContainer');
     
-    const eventosValidos = eventosDaApi.filter(item => item.start && (item.start.date || item.start.dateTime));
+    // Filtra eventos válidos e garante que a data seja ajustada antes da ordenação
+    const eventosValidos = eventosDaApi
+        .filter(item => item.start && (item.start.date || item.start.dateTime))
+        .map(item => {
+            let data;
+            
+            if (item.start.date) {
+                // Se for 'date' (dia inteiro), aplica o ajuste do T12:00:00
+                data = new Date(`${item.start.date}T12:00:00`);
+            } else {
+                // Se for 'dateTime' (com hora), usa a data original
+                data = new Date(item.start.dateTime);
+            }
+            
+            return {
+                data,
+                summary: item.summary,
+                isTimed: !!item.start.dateTime, // Se tem 'dateTime', é um evento com horário
+            };
+        });
 
     if (!eventosValidos || eventosValidos.length === 0) {
         listaContainer.innerHTML = '<h2>Lista de Eventos</h2><p class="aviso">Nenhum evento encontrado para este segmento em 2026.</p>';
@@ -283,11 +342,8 @@ function gerarListaEventos(eventosDaApi) {
     let html = '<h2>Lista de Eventos em Ordem Cronológica</h2><ul class="eventos-lista">';
 
     eventosValidos.forEach(item => {
-        const dataStr = item.start.dateTime || item.start.date;
-        const data = new Date(dataStr);
-        
-        // Formata a data e hora
-        const dataFormatada = data.toLocaleDateString('pt-BR', {
+        // Agora, 'item.data' é o objeto Date já ajustado (ou correto)
+        const dataFormatada = item.data.toLocaleDateString('pt-BR', {
             day: '2-digit',
             month: 'long',
             year: 'numeric'
@@ -295,8 +351,8 @@ function gerarListaEventos(eventosDaApi) {
         
         let nomeEvento = item.summary || 'Evento Sem Título';
         
-        if (item.start.dateTime) {
-            const hora = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        if (item.isTimed) {
+            const hora = item.data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
             nomeEvento = `[${hora}] ${nomeEvento}`;
         }
 
@@ -340,3 +396,20 @@ document.addEventListener('DOMContentLoaded', function() {
         gapi.load('client', initClient);
     }
 });
+
+/**
+ * Verifica se um evento é considerado "novo" com base na data de criação/atualização.
+ * @param {object} item - Objeto de evento da API do Google Calendar.
+ * @returns {boolean} - Retorna true se for novo.
+ */
+function isNovoEvento(item) {
+    // Define o limite de tempo: 14 dias atrás
+    const limiteNovo = new Date();
+    limiteNovo.setDate(limiteNovo.getDate() - 7); 
+
+    // Usa o campo updated (mais confiável para mudança) ou created
+    const dataReferencia = new Date(item.updated || item.created);
+
+    // Retorna TRUE se a data de referência for MAIOR que o nosso limite (ou seja, mais recente)
+    return dataReferencia > limiteNovo;
+}
