@@ -222,7 +222,7 @@ body {
     }
     /* NOVO: Regra para o Logo em Celulares */
     .logo {
-        max-width: 60px; /* Reduz o tamanho máximo do logo para caber na tela */
+        max-width: 120px; /* Reduz o tamanho máximo do logo para caber na tela */
         margin-top: 10px; /* Adiciona um pequeno espaço superior se necessário */
     }
     
@@ -363,5 +363,6 @@ body {
     from { opacity: 1; transform: scale(1); }
     to { opacity: 0.7; transform: scale(1.1); }
 }
+
 
 
