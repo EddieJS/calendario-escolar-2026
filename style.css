@@ -292,3 +292,74 @@ body {
 .nome-evento {
     color: #343a40;
 }
+
+/* ====================================================================
+   ESTILOS DE NOTIFICAÇÃO (ALERTA)
+   ==================================================================== */
+.alerta-notificacao {
+    max-width: 1200px;
+    margin: 10px auto 20px auto; /* Centraliza e adiciona espaço */
+    padding: 15px 20px;
+    border: 1px solid #990000; /* Borda Vermelho Destaque */
+    background-color: #ffe0e0; /* Fundo Vermelho bem suave */
+    color: #990000; /* Texto Vermelho Destaque */
+    border-radius: 6px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.alerta-notificacao p {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+/* 🔔 Responsividade: Reduz o tamanho da margem em telas pequenas */
+@media (max-width: 768px) {
+    .alerta-notificacao {
+        margin-left: 10px;
+        margin-right: 10px;
+        padding: 10px;
+        font-size: 1em;
+    }
+}
+
+/* ====================================================================
+   ESTILO DO INDICADOR DE NOVO EVENTO (Sininho/Dot)
+   ==================================================================== */
+
+/* O contêiner pai deve ser posicionado para que o 'dot' flutue */
+.tab-button {
+    /* ... (outros estilos) ... */
+    position: relative; /* CRUCIAL para o ::after flutuar */
+}
+
+.tab-button.has-new-events::after {
+    content: '🔔'; /* Ícone de Sininho */
+    /* Se preferir um ponto, use content: ''; e ajuste background-color/border-radius */
+    
+    position: absolute;
+    top: -5px; /* Posição acima do topo do botão */
+    right: -5px; /* Posição à direita do botão */
+    
+    font-size: 15px; /* Tamanho do sininho */
+    
+    /* Estilo do Fundo (se for um ponto/dot) */
+    /* background-color: #990000; */ /* Vermelho Destaque */
+    /* border-radius: 50%; */
+    /* width: 10px; */
+    /* height: 10px; */
+    
+    color: #990000; /* Cor do sininho (Vermelho Destaque) */
+    
+    /* Garante que o indicador esteja acima de tudo */
+    z-index: 5; 
+    
+    /* Adiciona uma animação sutil para piscar, se desejar */
+    animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0.7; transform: scale(1.1); }
+}
