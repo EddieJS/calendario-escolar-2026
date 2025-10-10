@@ -220,6 +220,16 @@ body {
         margin: 5px 0;
         width: 100%;
     }
+    /* NOVO: Regra para o Logo em Celulares */
+    .logo {
+        max-width: 180px; /* Reduz o tamanho máximo do logo para caber na tela */
+        margin-top: 10px; /* Adiciona um pequeno espaço superior se necessário */
+    }
+    
+    .cabecalho {
+        padding: 10px; /* Reduz o padding do cabeçalho */
+        min-height: 90px;
+    }
 }
 
 /* Estilo para esconder/mostrar containers */
