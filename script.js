@@ -387,7 +387,7 @@ function gerarListaEventos(eventosDaApi) {
 function setupInfoButton() {
     const infoButton = document.getElementById('info-button');
     // ** MANTENHA O NOME DO ARQUIVO SE ELE ESTIVER NA MESMA PASTA **
-    const urlDaPagina = 'https://eddiejs.github.io/informacoesImpotantes-cursos-escola/index.html'; 
+    const urlDaPagina = 'https://eddiejs.github.io/informacoesImportantes-cursos-escola/index.html'; 
 
     infoButton.addEventListener('click', function() {
         // Abre a nova página em uma nova aba
@@ -426,5 +426,6 @@ function isNovoEvento(item) {
     // Retorna TRUE se a data de referência for MAIOR que o nosso limite (ou seja, mais recente)
     return dataReferencia > limiteNovo;
 }
+
 
 
