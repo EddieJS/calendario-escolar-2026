@@ -74,7 +74,7 @@ function initClient() {
         setupInfoButton();
         // 💡 NOVO: LÓGICA DE EXIBIÇÃO TEMPORÁRIA DA NOTIFICAÇÃO
         if (MENSAGEM_ALERTA && DATA_LIMITE_ALERTA) {
-            const dataLimite = new Date(DATA_LIMITE_ALERTA);
+            const dataLimite = new Date(`${DATA_LIMITE_ALERTA}T00:00:00`);
             const hoje = new Date();
             
             // Compara apenas as datas (ignora o tempo exato)
@@ -426,4 +426,5 @@ function isNovoEvento(item) {
     // Retorna TRUE se a data de referência for MAIOR que o nosso limite (ou seja, mais recente)
     return dataReferencia > limiteNovo;
 }
+
 
