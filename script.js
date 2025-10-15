@@ -6,10 +6,16 @@ const API_KEY = 'AIzaSyCc77iWLeS0WFwiuyVR9AMidymfk4l9c9s';
 const ANO_ATUAL = 2026;
 const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 
-// 💡 NOVO: MENSAGEM DE NOTIFICAÇÃO
-// Se o valor for uma string vazia (''), o alerta não será exibido.
-// Use esta variável para o texto do seu aviso.
-const MENSAGEM_ALERTA = "";
+// ====================================================================
+// 💡 CONFIGURAÇÃO DA MENSAGEM DE ALERTA TEMPORÁRIA
+// ====================================================================
+
+// 1. O CONTEÚDO DA MENSAGEM (Se for uma string vazia (''), ela nunca será exibida)
+const MENSAGEM_ALERTA = "⚠️ ATENÇÃO: As datas de Reunião de Pais/Mestres serão confirmadas na próxima semana. Consulte a página de Informações Importantes.";
+
+// 2. DATA LIMITE PARA EXIBIÇÃO (Formato: YYYY-MM-DD. A mensagem SÓ aparecerá ATÉ esta data)
+// Exemplo: '2025-10-25' significa que a mensagem desaparecerá no dia 26/10/2025.
+const DATA_LIMITE_ALERTA = '2025-10-16';
 
 // Mapeamento dos segmentos para os IDs do Calendário
 const CALENDAR_IDS = {
@@ -66,11 +72,18 @@ function initClient() {
         setupToggleView(); 
         // NOVO: Inicializa o botão de informações
         setupInfoButton();
-        // 💡 NOVO: EXIBE A NOTIFICAÇÃO SE HOUVER MENSAGEM
-        if (MENSAGEM_ALERTA) {
-            const notifDiv = document.getElementById('notificacaoContainer');
-            notifDiv.innerHTML = `<p>${MENSAGEM_ALERTA}</p>`;
-            notifDiv.classList.remove('hidden');
+        // 💡 NOVO: LÓGICA DE EXIBIÇÃO TEMPORÁRIA DA NOTIFICAÇÃO
+        if (MENSAGEM_ALERTA && DATA_LIMITE_ALERTA) {
+            const dataLimite = new Date(DATA_LIMITE_ALERTA);
+            const hoje = new Date();
+            
+            // Compara apenas as datas (ignora o tempo exato)
+            // Se hoje for menor ou igual à data limite, exibe.
+            if (hoje.getTime() <= dataLimite.getTime()) {
+                const notifDiv = document.getElementById('notificacaoContainer');
+                notifDiv.innerHTML = `<p>${MENSAGEM_ALERTA}</p>`;
+                notifDiv.classList.remove('hidden');
+            }
         }
         // Carrega o primeiro calendário (Infantil)
         buscarEventosDoGoogle();
@@ -413,3 +426,4 @@ function isNovoEvento(item) {
     // Retorna TRUE se a data de referência for MAIOR que o nosso limite (ou seja, mais recente)
     return dataReferencia > limiteNovo;
 }
+
