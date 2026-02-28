@@ -20,8 +20,8 @@ const DATA_LIMITE_ALERTA = '2025-10-16';
 // Mapeamento dos segmentos para os IDs do Calendário
 const CALENDAR_IDS = {
     // Insira seus IDs REAIS aqui:
-    'Infantil': 'SEU_ID_DO_CALENDARIO_EDUCACAO_INFANTIL@group.calendar.google.com',
-    'Iniciais': 'SEU_ID_DO_CALENDARIO_FUNDAMENTAL_I@group.calendar.google.com',
+    'Infantil': 'c_e8bd1d5b6bf8ae6702feb7125fccb79011c3ac9804923b77f00ad39d36238f6e@group.calendar.google.com',
+    'Iniciais': 'c_94faf51a39ad041b013f0d72bc79b297534e6f55588104405c7bde52602e0400@group.calendar.google.com',
     'Finais': 'c_e9e94382fa730b18e80800e007e7cb1ed6a6bf274b86f336fbebfe2242c9310a@group.calendar.google.com',
     'Medio': 'c_c8e2a70aadd823b7d591eedc9dd34485fe457b67e29cd7556c025440e6051725@group.calendar.google.com',
 };
@@ -426,6 +426,7 @@ function isNovoEvento(item) {
     // Retorna TRUE se a data de referência for MAIOR que o nosso limite (ou seja, mais recente)
     return dataReferencia > limiteNovo;
 }
+
 
 
 
